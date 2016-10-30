@@ -1,8 +1,9 @@
 package com.department.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Date;
 
@@ -10,24 +11,13 @@ import java.util.Date;
  *
  */
 @Controller
+@RequestMapping("/")
 public class Teachers {
 
-    @RequestMapping("/teachers")
-    public String getListOfTeachers(Model model) {
-
-        System.out.println("Controller entry");
-
-        model.addAttribute("date", new Date().toString());
-
-        System.out.println("Controller exit. model= " + model);
-
+    @RequestMapping(value = "/teachers", method = RequestMethod.GET)
+    public String sayHelloAgain(ModelMap model) {
+        model.addAttribute("currentdate", new Date().toString());
         return "teachers";
-
     }
-
-//    @Override
-//    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-//        configurer.enable();
-//    }
 
 }
