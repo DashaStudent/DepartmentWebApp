@@ -1,5 +1,6 @@
 package com.department.dao;
 
+import com.department.domain.Clazz;
 import com.department.domain.Teacher;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -25,10 +26,30 @@ public class TeacherDao {
                         teacher.setId(rs.getInt("id"));
                         teacher.setFirstName(rs.getString("firstName"));
                         teacher.setLastName(rs.getString("lastName"));
+                        teacher.setLevel(rs.getString("level"));
+                        teacher.setTitle(rs.getString("title"));
+                        teacher.setExtraHours(rs.getInt("extra_hours"));
                         return teacher;
                     }
                 });
 
         return teachers;
+    }
+
+    public List<Clazz> getClassesByTeacherId(Integer techId) {
+
+        List<Clazz> classes = jdbcTemplate.query("Select * from CLASSES where FK_TECH_ID = ?",
+                new Object[]{techId},
+                new RowMapper<Clazz>() {
+                    public Clazz mapRow(ResultSet rs, int i) throws SQLException {
+                        Clazz clazz = new Clazz();
+                        clazz.setId(rs.getInt("id"));
+                        clazz.setClassName(rs.getString("CLASS_NAME"));
+                        clazz.setHours(rs.getInt("HOURS"));
+                        return clazz;
+                    }
+                });
+
+        return classes;
     }
 }
